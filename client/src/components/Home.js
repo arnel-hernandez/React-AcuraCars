@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-
 import Cars from './Cars'
+import Radium from 'radium'
 
-export default class Home extends Component {
+
+class Home extends Component {
 
     state = {
         cars: [
@@ -20,7 +21,6 @@ export default class Home extends Component {
             return car.id === id
         })
 
-
         const car = {
             ...this.state.cars[carIndex]
         }
@@ -32,11 +32,6 @@ export default class Home extends Component {
         cars[carIndex] = car
 
         this.setState({cars: cars})
-            // cars: [
-            //     {id: 1, brand: e.target.value, model: 'ILX', year:'2019', imgName: 'AcuraILX'},
-            //     {id: 2, brand: e.target.value, model: 'TLX', year:'2019', imgName: 'AcuraTLX'},
-            //     {id: 3, brand: e.target.value, model: 'RDX', year:'2019', imgName: 'AcuraRDX'}
-            // ]
     }
 
     nameChangeHandler2 = (e) => {
@@ -53,40 +48,24 @@ export default class Home extends Component {
     }
 
     deleteCarHandler = (carid) => {
-        //ES5
-        // const cars = this.state.cars.slice()
-        //ES6
         const cars = [...this.state.cars]
-        //
         cars.splice(carid, 1)
         this.setState({cars: cars})
     }
 
     render() {
-        //KEY ID DOESNT WORK WITH THIS
+        
         const {description} = this.state
-        // const viewALLCar = cars.map((car, carid) => {
-        //     return(
-        //     <div>
-        //     {
-        //     //ELVIS OPERATOR. If true show JSX, if false show null ... ? JSX : null
-        //     this.state.showImage === true ?
-        //     <div>
-        //         <Cars 
-        //         key={car.id}
-        //         year={car.year}
-        //         brand={car.brand}
-        //         model={car.model}
-        //         imgName={car.imgName}
-        //         click={() => this.deleteCarHandler(carid)}
-        //         changed={(e) => this.nameChangeHandler(e, cars.id)}
-        //         changed2={this.nameChangeHandler2}
-        //         />
-        //     </div> : null 
-        //     }
-        //     <h3>{comment}</h3>
-        //     </div>
-        // )});
+
+        const style = {
+            backgroundColor: 'green',
+            marginBottom: 10,
+            cursor: 'pointer',
+            ':hover': {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
+        }
 
         let cars = null
         
@@ -107,16 +86,40 @@ export default class Home extends Component {
                     })}
                 </div>
             )
+
+            style.backgroundColor = 'red'
+            style[':hover'] = {
+                backgroundColor: 'salmon',
+                color: 'black'
+            }
+        }
+
+        // let classes = ['red', 'bold'].join(' ')
+        // style={classes}
+
+        const classes = []
+        if(this.state.cars.length <= 2){
+            classes.push('red')
+        }
+        if(this.state.cars.length <=1 ){
+            classes.push('bold')
         }
 
         return (
+           
             <div>
-                <button style={{marginBottom: 10}} onClick={this.showImageHandler}>View/Hide Cars</button>
+                <h1 className={classes.join(' ')}>Autoz</h1>
+                    <button style={style} onClick={this.showImageHandler}>
+                        View/Hide Cars
+                    </button>
                 {cars}
             </div>
+            
         )
     }
 }
+
+export default Radium(Home)
 
 //ALTERNATIVES
 
@@ -132,21 +135,37 @@ export default class Home extends Component {
 //     Add Description: <input type="text" style={style} onChange={this.nameChangeHandler2}/>
 // </div>
 
-// let cars = null
-// if ( this.state.showImage){
-//     cars = (
-//         <div>
-//             {this.state.cars.map(car => {
-//                 return <Cars 
-//                 key={cars.id}
-//                 year={cars.year}
-//                 brand={cars.brand}
-//                 model={cars.model}
-//                 click={() => this.deleteCarHandler(carid)}
-//                 changed={(e) => this.nameChangeHandler(e, cars.id)}
-//                 changed2={this.nameChangeHandler2}
-//                 />
-//             })}
-//         </div>
-//     )
-// }
+// const viewALLCar = cars.map((car, carid) => {
+//     return(
+//     <div>
+//     {
+//     //ELVIS OPERATOR. If true show JSX, if false show null ... ? JSX : null
+//     this.state.showImage === true ?
+//     <div>
+//         <Cars 
+//         key={car.id}
+//         year={car.year}
+//         brand={car.brand}
+//         model={car.model}
+//         imgName={car.imgName}
+//         click={() => this.deleteCarHandler(carid)}
+//         changed={(e) => this.nameChangeHandler(e, car.id)}
+//         changed2={this.nameChangeHandler2}
+//         />
+//     </div> : null 
+//     }
+//     <h3>{comment}</h3>
+//     </div>
+// )});
+
+// cars: [
+//     {id: 1, brand: e.target.value, model: 'ILX', year:'2019', imgName: 'AcuraILX'},
+//     {id: 2, brand: e.target.value, model: 'TLX', year:'2019', imgName: 'AcuraTLX'},
+//     {id: 3, brand: e.target.value, model: 'RDX', year:'2019', imgName: 'AcuraRDX'}
+// ]
+
+//ES5
+//const cars = this.state.cars.slice()
+//ES6
+//const cars = [...this.state.cars]
+        

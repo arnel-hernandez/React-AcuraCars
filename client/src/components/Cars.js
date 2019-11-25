@@ -3,10 +3,14 @@ import React from 'react'
 const Cars = (props) => {
     const style = {
         marginBottom: 10,
-        marginTop: 10
+        marginTop: 10,
+        // '@media (min-width: 500px)': {
+        //     width: '450px'
+        // }
+
     }
     return (
-        <div className="Cars">
+        <div className="Cars" style={style}>
                 <div>
                     <h1>{props.year} {props.brand} {props.model}</h1>
                     <p>{props.description}</p>
